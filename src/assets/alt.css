@@ -1,0 +1,21 @@
+:root {
+  --primary-color: #2E294E; /* Navy */
+  --secondary-color: #1B998B; /* Teal */
+  --accent-color: #F46036; /* Orange */
+  --contrast-color: #D7263D; /* Red */
+  --background-color: #F7F7F7; /* Light neutral for backgrounds */
+  --footer-bg-color: #C5D86D; /* Lime */
+  --font-color: #FFFFFF; /* White for text on dark backgrounds */
+  --heading-font-size: 2.5rem;
+  --subtitle-font-size: 1.5rem;
+  --content-padding: 2rem;
+  --content-border-radius: 8px;
+  --content-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --button-padding: 0.75rem 1.5rem;
+  --button-bg-color: #1B998B; /* Teal for buttons */
+  --button-hover-bg-color: #F46036; /* Orange on hover */
+  --color-heading: #FFFFFF; /* White for headings on dark backgrounds */
+  --color-text: #2E294E; /* Navy for text on light backgrounds */
+  --transition-duration: 0.3s;
+  --border-color-light: #E0E0E0; /* Light border color */
+}

@@ -1,0 +1,126 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  /* GPT Project-specific variables */
+  --primary-color: #2E294E; /* Navy */
+  --secondary-color: #1B998B; /* Teal */
+  --green-color: #10b981;
+  --tertiary-color: #C5D86D; /* Lime */
+  --accent-color: #F46036; /* Orange */
+  --contrast-color: #D7263D; /* Red */
+  --gold: #FFD700; /* Gold */
+  --hot-pink: #FF69B4; /* Hot Pink */
+  --light-pink: #FFB6C1; /* Light Pink */
+  
+  --blue-color: #e5e7eb
+
+  --light-blue: #F0F8FF; /* Alice Blue */
+  --dark-gray: #333; /* Dark Gray */
+
+
+  --background-color: #F7F7F7; /* Light neutral for backgrounds */
+  --font-color: #FFFFFF; /* White for text on dark backgrounds */
+  --footer-font-color: #333; /* Dark Gray */
+
+  --border-color: #4A5568; /* Gray */
+  --border-color-light: #808080; /* Light Gray */
+  
+  --button-hover-bg-color: var(--light-pink);
+
+
+  /* Main Theme Colors*/
+  --nav-bar-color: var(--secondary-color);
+  --side-menu-color: var(--green-color);
+  --landing-page-content-background: var(--gold);
+  --footer-bg-color: var(--gold); 
+
+  /* WorldSelector */
+  --navbar-height: 80px;
+  --footer-height: 60px;
+  --loading-spinner-size: 100px;
+  
+  /* Spacing variables for this project */
+  --content-padding: 2rem;
+  --content-border-radius: 10px;
+  --content-box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --heading-font-size: 2.5rem;
+  --subtitle-font-size: 1.5rem;
+  --button-bg-color: var(--primary-color);
+  --button-padding: 0.75rem 1.5rem;
+  --button-border-radius: 4px;
+  --transition-duration: 0.3s;
+
+
+  --login-button-padding: 8px 16px;
+  --login-button-bg-color: var(--primary-color); /* Reusing primary color */
+  --login-button-hover-bg-color: var(--button-hover-bg-color); /* Reusing button hover color */
+  --login-button-font-size: 16px;
+  --login-button-border-radius: 8px;
+  --login-button-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+  --icon-button-opacity-hover: 0.85;
+  
+   /* Account Menu Styles */
+  --user-avatar-size: 50px;
+  --user-avatar-border-radius: 50%;
+  --user-avatar-border-color: var(--background-color);
+  --dropdown-menu-bg-color: var(--color-background);
+  --dropdown-menu-border-radius: 8px;
+  --dropdown-menu-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  --dropdown-menu-border-color: var(--color-border);
+
+  /* Menu Styles */
+  --menu-content-padding: 0.75rem;
+  --menu-item-padding: 0.5rem 1rem;
+  --menu-item-font-size: 0.9rem;
+  --menu-item-color: var(--font-color);
+  --menu-item-bg-color: var(--color-background-soft);
+  --menu-item-hover-bg-color: var(--color-background-mute);
+  --menu-item-border-radius: 4px;
+  --menu-item-transition-duration: 0.3s;
+  --menu-item-text-align: center;
+  
+  /* WorldLink Cards */
+  --world-link-width: 280px;
+  --polaroid-bg-color: var(--background-color); /* Alice Blue */
+  --polaroid-border-color: var(--secondary-color); /* Hot Pink */
+  --polaroid-border-color-light: #FFB6C1; /* Light Pink */
+  --polaroid-text-color: #333; /* Dark Gray */
+  --info-bg-color: #f8f9fa; /* Light gray for a subtle information background */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--vt-c-black);
+    --color-background-soft: var(--vt-c-black-soft);
+    --color-background-mute: var(--vt-c-black-mute);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--vt-c-divider-dark-1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(  --background-color);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

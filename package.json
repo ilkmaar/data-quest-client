@@ -1,0 +1,27 @@
+{
+  "name": "vuejs-with-vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.11.3",
+    "@headlessui/vue": "^1.7.22",
+    "@supabase/ssr": "^0.4.0",
+    "@vue/apollo-composable": "^4.0.2",
+    "axios": "^1.7.3",
+    "cookie": "^0.6.0",
+    "jose": "^5.6.3",
+    "jwt-simple": "^0.5.6",
+    "pkce-challenge": "^4.1.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.4.2",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.5.1"
+  }
+}
