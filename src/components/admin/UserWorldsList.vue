@@ -20,6 +20,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['world-click'])
+
 const handleClick = (player_id, player_name, world_id, world_name) => {
   emit('world-click', { player_id, player_name, world_id, world_name })
 }
@@ -28,9 +29,19 @@ const handleClick = (player_id, player_name, world_id, world_name) => {
 <style scoped>
 .worlds-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--world-link-width), 1fr));
-    gap: 10px;
-    align-items: start;
-    justify-items: start;
+    /* Use auto-fit to fill the row with as many columns as possible */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; /* Increased gap for better spacing */
+    padding: 16px; /* Added padding for inner spacing */
+    justify-items: start; /* Align items to the left */
+    align-items: start; /* Align items to the top */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Optional: Make sure WorldLink components are responsive */
+.worlds-list > * {
+    width: 100%;
+    max-width: 300px; /* Optional max width for each card */
+    box-sizing: border-box;
 }
 </style>

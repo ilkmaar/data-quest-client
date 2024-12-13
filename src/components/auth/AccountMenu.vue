@@ -90,6 +90,7 @@ const handleLogout = () => {
     margin-top: 0.5rem;
     width: 16rem;
     background-color: var(--background-color); /* Fixed background color */
+    color: var(--dark-gray);
     border-radius: var(--dropdown-menu-border-radius);
     box-shadow: var(--dropdown-menu-box-shadow);
     z-index: 10;

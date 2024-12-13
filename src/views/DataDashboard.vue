@@ -34,8 +34,8 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
-
 const player = computed(() => store.getters['user/player'])
+    
 </script>
 
 <style scoped>

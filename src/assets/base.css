@@ -1,40 +1,41 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  /* GPT Project-specific variables */
-  --primary-color: #2E294E; /* Navy */
-  --secondary-color: #1B998B; /* Teal */
-  --green-color: #10b981;
-  --tertiary-color: #C5D86D; /* Lime */
-  --accent-color: #F46036; /* Orange */
-  --contrast-color: #D7263D; /* Red */
-  --gold: #FFD700; /* Gold */
-  --hot-pink: #FF69B4; /* Hot Pink */
-  --light-pink: #FFB6C1; /* Light Pink */
-  
-  --blue-color: #e5e7eb
+  /* Concord colors */
+  --concord-orange: #e86e2f;
+  --concord-light-blue: #6ec4d7;
+  --concord-blue: #0093b0;
+  --concord-green: #2da343;
+  --concord-yellow: #ffc222;
+  --concord-pale-blue: #c9e9e6;
+  --concord-beige: #ffe4af;
+  --concord-off-white: #f6ecdc;
+  --concord-brown: #b55414;
 
+  --blue-color: #e5e7eb
   --light-blue: #F0F8FF; /* Alice Blue */
   --dark-gray: #333; /* Dark Gray */
 
-
   --background-color: #F7F7F7; /* Light neutral for backgrounds */
   --font-color: #FFFFFF; /* White for text on dark backgrounds */
-  --footer-font-color: #333; /* Dark Gray */
 
   --border-color: #4A5568; /* Gray */
   --border-color-light: #808080; /* Light Gray */
-  
   --button-hover-bg-color: var(--light-pink);
 
-
   /* Main Theme Colors*/
+  --header-color: var(--concord-blue);
+  --header-text-color: var(--font-color);
+
   --nav-bar-color: var(--secondary-color);
   --side-menu-color: var(--green-color);
   --landing-page-content-background: var(--gold);
-  --footer-bg-color: var(--gold); 
+
+  /* Footer */
+  --footer-bg-color: var(--concord-blue);
+  --footer-font-color: var(--font-color);
 
   /* WorldSelector */
-  --navbar-height: 80px;
+  --header-height: 80px;
   --footer-height: 60px;
   --loading-spinner-size: 100px;
   
@@ -48,7 +49,6 @@
   --button-padding: 0.75rem 1.5rem;
   --button-border-radius: 4px;
   --transition-duration: 0.3s;
-
 
   --login-button-padding: 8px 16px;
   --login-button-bg-color: var(--primary-color); /* Reusing primary color */
@@ -93,10 +93,8 @@
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
-
     --color-border: var(--vt-c-divider-dark-2);
     --color-border-hover: var(--vt-c-divider-dark-1);
-
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
   }

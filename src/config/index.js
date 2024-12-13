@@ -1,6 +1,6 @@
-export const CLIENT_APP_DOMAIN = '.replit.app'
+export const CLIENT_APP_DOMAIN = '.ilkmaar.com'
 
-export const CLIENT_APP_URL = "https://data-quest-client.replit.app"
+export const CLIENT_APP_URL = "https://ilkmaar.com"
 
 export const CLIENT_CALLBACK_URL = `${CLIENT_APP_URL}/#/my-games`
 

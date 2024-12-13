@@ -1,17 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { useStore } from 'vuex'
-import LandingPage from '@/components/common/LandingPage.vue'
+import LandingPage from '@/views/LandingPage.vue'
 import MyGames from '@/views/MyGames.vue'
 import PlayerProfile from '@/views/PlayerProfile.vue'
-import UserManagement from '@/views/UserManagement.vue'
-import WorldManagement from '@/views/WorldManagement.vue'
 
 const routes = [
     { path: '/', component: LandingPage },
+    { path: '/about', component: LandingPage },
+    { path: '/resources', component: LandingPage },
     { path: '/my-games', component: MyGames, meta: { requiresAuth: true } },
-    { path: '/profile', component: PlayerProfile, meta: { requiresAuth: true } },
-    { path: '/user-management', component: UserManagement, meta: { requiresAuth: true } },
-    { path: '/world-management', component: WorldManagement, meta: { requiresAuth: true } }
+    { path: '/world', component: MyGames, meta: { requiresAuth: true } },
+    { path: '/profile', component: PlayerProfile, meta: { requiresAuth: true } }
 ]
 
 const router = createRouter({

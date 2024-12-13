@@ -2,11 +2,13 @@
 import userQueries from './userQueries';
 import adminQueries from './adminQueries.js'
 import adminMutations from '../mutations/adminMutations.js'
+import currentStateQueries from './currentStateQueries';
 
 const queries = {
     ...userQueries,
     ...adminQueries,
-    ...adminMutations
+    ...adminMutations,
+    ...currentStateQueries
 }
 
 export default queries

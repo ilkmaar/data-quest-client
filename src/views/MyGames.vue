@@ -1,13 +1,13 @@
 <template>
   <div class="my-worlds-container">
     <LoadingSpinner v-if="loading" />
-    <UserWorldsList v-else :playerWorlds="games" @world-click="handleClick" />
+    <UserWorldsList v-else :playerWorlds="games" @world-click="selectWorld" />
     <NoWorlds v-if="!loading && !games.length" />
   </div>
 </template>
 
 <script setup>
-import { watch, computed } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import UserWorldsList from '@/components/admin/UserWorldsList.vue'
 import NoWorlds from '@/components/admin/NoWorlds.vue'
@@ -20,7 +20,7 @@ const { getWorldLink } = useWorldLinks()
 const loading = computed(() => store.getters['user/loading'].playerWorlds)
 const games = computed(() => store.getters['user/playerWorlds'] || [])
 
-const handleClick = async (data) => {
+const selectWorld = async (data) => {
   try {
     const link = await getWorldLink(data)
     if (link && link.gameLink) {
@@ -39,5 +39,7 @@ const handleClick = async (data) => {
 .my-worlds-container {
   width: 100%;
   padding: 20px;
+  /* Ensure the container uses block layout */
+  display: block;
 }
 </style>

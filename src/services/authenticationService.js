@@ -34,6 +34,7 @@ const authenticationService = {
     },
 
     async checkAuth() {
+        console.log("checking auth")
         const supabase = createClient()
         const { data: { session }, error } = await supabase.auth.getSession()
 
@@ -69,6 +70,7 @@ const authenticationService = {
     },
 
     async logout() {
+        console.log("logging out")
         const supabase = createClient()
         const { error } = await supabase.auth.signOut()
         if (error) {
