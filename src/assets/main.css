@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* Import global styles after Tailwind */
-@import "./global.css";
-@import "./base.css";
-
 /* Remove conflicting styles */
 #app {
   margin: 0 auto;
@@ -15,6 +11,17 @@ a,
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
+}
+
+:root {
+  --primary-color: #1a2a6c;
+  --accent-color: #ff6b2b;
+  --text-color: #2c3e50;
+  --background-color: #f8f9fa;
+  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-heading: "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
 }
 
 @media (hover: hover) {
@@ -34,4 +41,46 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+/* Base styles */
+body {
+  @apply bg-gray-100;
+}
+
+/* Typography */
+.newspaper-title {
+  @apply font-serif text-5xl font-bold tracking-tight text-gray-900;
+  font-family: "Playfair Display", serif;
+}
+
+.article-title {
+  @apply font-serif text-3xl font-bold text-gray-900 leading-tight;
+  font-family: "Playfair Display", serif;
+}
+
+.article-lead {
+  @apply text-xl text-gray-700 leading-relaxed;
+}
+
+/* Data visualization containers */
+.data-visualization {
+  @apply bg-white p-6 rounded-xl shadow-lg border border-gray-200;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
 }

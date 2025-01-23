@@ -9,8 +9,14 @@
     </div>
 
     <div class="metric-selector">
-      <label for="metric-select">Select Metric:</label>
-      <select id="metric-select" v-model="selectedMetric">
+      <label for="metric-select" class="text-sm font-medium text-gray-600"
+        >Select Metric:</label
+      >
+      <select
+        id="metric-select"
+        v-model="selectedMetric"
+        class="px-3 py-1.5 text-sm border border-gray-200 rounded-lg bg-white shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+      >
         <option value="health">Health</option>
         <option value="social">Social</option>
         <option value="mood">Mood</option>
@@ -136,28 +142,28 @@ const internalConfig = ref<VueUiStripPlotConfig>({
     chart: {
       backgroundColor: "#FFFFFFff",
       color: "#1A1A1Aff",
-      padding: { top: 30, right: 30, bottom: 50, left: 70 },
+      padding: { top: 40, right: 30, bottom: 50, left: 70 },
       grid: {
         show: true,
-        stroke: "#CCCCCCff",
+        stroke: "#E5E7EB",
         strokeWidth: 1,
-        scaleSteps: 10,
+        scaleSteps: 5,
         horizontalGrid: {
           show: true,
-          stroke: "#CCCCCCff",
+          stroke: "#E5E7EB",
           strokeWidth: 0.5,
           strokeDasharray: 4,
         },
         verticalGrid: {
           show: true,
-          stroke: "#CCCCCCff",
+          stroke: "#E5E7EB",
           strokeWidth: 0.5,
           strokeDasharray: 4,
         },
       },
       plots: {
         opacity: 0.8,
-        radius: 5,
+        radius: 4,
         stroke: "#FFFFFFff",
         strokeWidth: 1,
         shape: "circle",
@@ -170,44 +176,44 @@ const internalConfig = ref<VueUiStripPlotConfig>({
         bestPlotLabel: {
           show: true,
           showValue: true,
-          fontSize: 12,
-          color: "#1A1A1Aff",
+          fontSize: 11,
+          color: "#4B5563",
           rounding: 0,
-          offsetY: 10,
+          offsetY: 8,
         },
         axis: {
           xLabel: "Faction",
           xLabelOffsetY: 35,
           yLabel: selectedMetricLabel.value,
           yLabelOffsetX: -45,
-          fontSize: 13,
-          color: "#1A1A1Aff",
+          fontSize: 12,
+          color: "#4B5563",
         },
         xAxisLabels: {
           show: true,
-          color: "#1A1A1Aff",
-          fontSize: 12,
-          offsetY: 15,
+          color: "#4B5563",
+          fontSize: 11,
+          offsetY: 12,
         },
         yAxisLabels: {
           show: true,
-          color: "#1A1A1Aff",
-          fontSize: 12,
+          color: "#4B5563",
+          fontSize: 11,
           rounding: 0,
-          offsetX: -10,
+          offsetX: -8,
         },
       },
       title: {
         text: `Creature ${selectedMetricLabel.value}`,
-        color: "#1A1A1Aff",
-        fontSize: 16,
+        color: "#111827",
+        fontSize: 14,
         bold: true,
         textAlign: "center",
-        paddingTop: 10,
+        paddingTop: 8,
         subtitle: {
-          color: "#8A8A8Aff",
+          color: "#6B7280",
           text: `Current ${selectedMetricLabel.value}`,
-          fontSize: 12,
+          fontSize: 11,
           bold: false,
         },
       },
@@ -215,14 +221,14 @@ const internalConfig = ref<VueUiStripPlotConfig>({
         show: true,
         color: "#1A1A1Aff",
         backgroundColor: "#FFFFFFff",
-        fontSize: 14,
+        fontSize: 12,
         customFormat: null,
         borderRadius: 4,
         borderColor: "#e1e5e8",
         borderWidth: 1,
         backgroundOpacity: 30,
         position: "center",
-        offsetY: 24,
+        offsetY: 20,
         roundingValue: 0,
       },
     },
@@ -246,47 +252,32 @@ watch(selectedMetric, (newMetric) => {
 
 <style scoped>
 .plot-container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  @apply w-full rounded-lg bg-white;
+  height: 400px;
 }
 
 .strip-plot-view {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-  width: 100%;
+  @apply relative w-full;
+  height: 350px;
 }
 
-/* Make sure VueDataUi takes full height of its container */
 :deep(.vue-data-ui) {
-  height: 100%;
-  width: 100%;
+  @apply h-full w-full;
 }
 
 :deep(.vue-data-ui svg) {
-  height: 100%;
-  width: 100%;
-  max-height: calc(100vh - 300px); /* Prevent excessive height */
+  @apply h-full w-full;
 }
 
 .metric-selector {
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  align-items: center;
-  background: #f8f9fa;
-  border-top: 1px solid #e1e5e8;
-  margin-top: auto; /* Push to bottom */
+  @apply p-3 flex justify-center gap-3 items-center rounded-b-lg bg-gray-50 border-t border-gray-100;
 }
 
 select {
-  padding: 5px 10px;
-  border-radius: 4px;
-  border: 1px solid #e1e5e8;
-  font-size: 0.9rem;
+  @apply px-3 py-1.5 text-sm rounded-lg bg-white border border-gray-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
+}
+
+label {
+  @apply text-sm font-medium text-gray-600;
 }
 </style>

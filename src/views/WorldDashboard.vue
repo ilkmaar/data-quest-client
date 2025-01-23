@@ -1,149 +1,177 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50">
-    <!-- Masthead -->
-    <header
-      class="text-center border-b-4 border-double border-gray-900 pb-4 mb-8"
-    >
-      <div class="text-sm text-gray-600 mb-2">{{ currentDate }}</div>
-      <h1 class="newspaper-title">The Ilkmaar Observer</h1>
-      <div class="flex items-center justify-center space-x-4 mt-2">
-        <span class="text-sm text-gray-600">Vol. XXIII</span>
-        <span class="text-sm bg-gray-900 text-white px-3 py-1"
-          >Data Science Edition</span
-        >
-        <span class="text-sm text-gray-600">Price: 2 Credits</span>
-      </div>
-    </header>
+  <div class="min-h-screen bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Masthead with more prominent styling -->
+      <header class="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
+        <div class="text-sm text-gray-600 mb-2">{{ currentDate }}</div>
+        <h1 class="newspaper-title mb-4">The Ilkmaar Observer</h1>
+        <div class="flex items-center justify-center space-x-4">
+          <span class="text-sm text-gray-600">Vol. XXIII</span>
+          <span class="text-sm bg-indigo-600 text-white px-4 py-1 rounded-full"
+            >Data Science Edition</span
+          >
+          <span class="text-sm text-gray-600">Price: 2 Credits</span>
+        </div>
+      </header>
 
-    <!-- Breaking News Banner -->
-    <div
-      class="bg-red-700 text-white py-2 px-4 rounded-lg mb-8 flex items-center justify-between"
-    >
-      <div class="flex items-center">
-        <span class="font-bold mr-2">BREAKING:</span>
-        <span
-          >World Health Crisis at {{ worldHealth }}% - Join Investigation
-          Now!</span
-        >
-      </div>
-      <button
-        @click="joinWorld"
-        :disabled="loading"
-        class="px-4 py-1 bg-white text-red-700 rounded hover:bg-gray-100 transition-colors disabled:opacity-50"
+      <!-- Breaking News Banner with improved visibility -->
+      <div
+        class="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-xl shadow-lg mb-8 flex items-center justify-between"
       >
-        {{ loading ? "Loading..." : "Join Investigation" }}
-      </button>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <!-- Main Column -->
-      <div class="lg:col-span-8 space-y-8">
-        <!-- Lead Story -->
-        <article class="border-b border-gray-200 pb-8">
-          <h2 class="article-title mb-4">
-            Creature Health Crisis: A Deep Dive Analysis
-          </h2>
-          <p class="article-lead mb-6">
-            Our data scientists have uncovered concerning patterns in creature
-            health across all factions. The following visualization reveals the
-            full scope of the situation.
-          </p>
-          <div class="data-visualization">
-            <CreatureHealthStripPlot />
-          </div>
-
-          <!-- Quick Stats -->
-          <div class="grid grid-cols-3 gap-4 mt-6">
-            <div class="text-center p-4 bg-gray-50 rounded-lg">
-              <div class="text-3xl font-bold text-blue-800">
-                {{ totalCreatures }}
-              </div>
-              <div class="text-sm text-gray-600">Active Creatures</div>
-            </div>
-            <div class="text-center p-4 bg-gray-50 rounded-lg">
-              <div class="text-3xl font-bold text-blue-800">
-                {{ activeFactions }}
-              </div>
-              <div class="text-sm text-gray-600">Active Factions</div>
-            </div>
-            <div class="text-center p-4 bg-gray-50 rounded-lg">
-              <div class="text-3xl font-bold text-blue-800">
-                {{ highestHealth }}%
-              </div>
-              <div class="text-sm text-gray-600">Peak Health</div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Secondary Story -->
-        <article>
-          <h2 class="article-title mb-4">Unusual Movement Patterns Detected</h2>
-          <p class="article-lead mb-6">
-            Latest satellite data shows unprecedented creature gatherings in key
-            locations. Our interactive map reveals potential hotspots of
-            activity.
-          </p>
-          <div class="data-visualization">
-            <CurrentLocationsMap />
-          </div>
-        </article>
+        <div class="flex items-center">
+          <span class="font-bold mr-2 text-xl">BREAKING:</span>
+          <span class="text-lg"
+            >World Health Crisis at {{ worldHealth }}% - Join Investigation
+            Now!</span
+          >
+        </div>
+        <button
+          @click="joinWorld"
+          :disabled="loading"
+          class="px-6 py-2 bg-white text-red-700 rounded-lg font-bold hover:bg-gray-50 transform hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100"
+        >
+          {{ loading ? "Loading..." : "Join Investigation" }}
+        </button>
       </div>
 
-      <!-- Sidebar -->
-      <aside class="lg:col-span-4 space-y-6">
-        <!-- Faction Watch -->
-        <div class="bg-gray-100 p-6 rounded-lg">
-          <h3 class="font-serif text-xl font-bold mb-4">Faction Watch</h3>
-          <div class="space-y-4">
-            <div class="border-b border-gray-200 pb-2">
-              <div class="font-bold">Most Active Faction</div>
-              <div class="text-lg">{{ mostActiveFaction }}</div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Main Column -->
+        <div class="lg:col-span-8 space-y-8">
+          <!-- Lead Story -->
+          <article class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="article-title mb-4">
+              Creature Health Crisis: A Deep Dive Analysis
+            </h2>
+            <p class="article-lead mb-8">
+              Our data scientists have uncovered concerning patterns in creature
+              health across all factions. The following visualization reveals
+              the full scope of the situation.
+            </p>
+            <div class="data-visualization mb-8">
+              <CreatureHealthStripPlot />
             </div>
-            <div class="space-y-2">
-              <h4 class="font-bold">Data Detective Tips</h4>
-              <ul class="space-y-2">
-                <li class="flex items-start">
-                  <span class="text-lg mr-2">🔍</span>
-                  <span class="text-sm"
-                    >Track faction movements for pattern analysis</span
-                  >
-                </li>
-                <li class="flex items-start">
-                  <span class="text-lg mr-2">📊</span>
-                  <span class="text-sm"
-                    >Compare health metrics across regions</span
-                  >
-                </li>
-                <li class="flex items-start">
-                  <span class="text-lg mr-2">🌟</span>
-                  <span class="text-sm"
-                    >Monitor social interactions between creatures</span
-                  >
-                </li>
-              </ul>
+
+            <!-- Quick Stats with improved cards -->
+            <div class="grid grid-cols-3 gap-6">
+              <div
+                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
+              >
+                <div class="text-4xl font-bold text-blue-600 mb-2">
+                  {{ totalCreatures }}
+                </div>
+                <div class="text-sm text-gray-600 font-medium">
+                  Active Creatures
+                </div>
+              </div>
+              <div
+                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
+              >
+                <div class="text-4xl font-bold text-blue-600 mb-2">
+                  {{ activeFactions }}
+                </div>
+                <div class="text-sm text-gray-600 font-medium">
+                  Active Factions
+                </div>
+              </div>
+              <div
+                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
+              >
+                <div class="text-4xl font-bold text-blue-600 mb-2">
+                  {{ highestHealth }}%
+                </div>
+                <div class="text-sm text-gray-600 font-medium">Peak Health</div>
+              </div>
             </div>
-          </div>
+          </article>
+
+          <!-- Secondary Story -->
+          <article class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="article-title mb-4">
+              Unusual Movement Patterns Detected
+            </h2>
+            <p class="article-lead mb-8">
+              Latest satellite data shows unprecedented creature gatherings in
+              key locations. Our interactive map reveals potential hotspots of
+              activity.
+            </p>
+            <div class="data-visualization">
+              <CurrentLocationsMap />
+            </div>
+          </article>
         </div>
 
-        <!-- Weather Report -->
-        <div class="bg-blue-50 p-6 rounded-lg">
-          <h3 class="font-serif text-xl font-bold mb-4">Data Conditions</h3>
-          <div class="space-y-2">
-            <div class="flex justify-between">
-              <span>Signal Strength:</span>
-              <span class="font-bold">Excellent</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Data Quality:</span>
-              <span class="font-bold">98%</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Network Status:</span>
-              <span class="font-bold text-green-600">Online</span>
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 space-y-6">
+          <!-- Faction Watch -->
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+              Faction Watch
+            </h3>
+            <div class="space-y-6">
+              <div class="border-b border-gray-200 pb-4">
+                <div class="font-medium text-gray-600 mb-1">
+                  Most Active Faction
+                </div>
+                <div class="text-xl font-bold text-indigo-600">
+                  {{ mostActiveFaction }}
+                </div>
+              </div>
+              <div class="space-y-4">
+                <h4 class="font-bold text-gray-900">Data Detective Tips</h4>
+                <ul class="space-y-4">
+                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <span class="text-2xl mr-3">🔍</span>
+                    <span class="text-sm"
+                      >Track faction movements for pattern analysis</span
+                    >
+                  </li>
+                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <span class="text-2xl mr-3">📊</span>
+                    <span class="text-sm"
+                      >Compare health metrics across regions</span
+                    >
+                  </li>
+                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                    <span class="text-2xl mr-3">🌟</span>
+                    <span class="text-sm"
+                      >Monitor social interactions between creatures</span
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </aside>
+
+          <!-- Data Conditions -->
+          <div
+            class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg border border-blue-100"
+          >
+            <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+              Data Conditions
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="flex justify-between items-center p-2 bg-white rounded-lg"
+              >
+                <span class="text-gray-600">Signal Strength:</span>
+                <span class="font-bold text-green-600">Excellent</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-2 bg-white rounded-lg"
+              >
+                <span class="text-gray-600">Data Quality:</span>
+                <span class="font-bold text-green-600">98%</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-2 bg-white rounded-lg"
+              >
+                <span class="text-gray-600">Network Status:</span>
+                <span class="font-bold text-green-600">Online</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 </template>
