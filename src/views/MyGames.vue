@@ -7,32 +7,27 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import UserWorldsList from '@/components/admin/UserWorldsList.vue'
-import NoWorlds from '@/components/admin/NoWorlds.vue'
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
-import { useWorldLinks } from '@/composables/useWorldLinks.js'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import UserWorldsList from "../components/user/UserWorldsList.vue";
+import NoWorlds from "../components/user/NoWorlds.vue";
+import LoadingSpinner from "../components/common/LoadingSpinner.vue";
 
-const store = useStore()
-const { getWorldLink } = useWorldLinks()
+const store = useStore();
+const router = useRouter();
 
-const loading = computed(() => store.getters['user/loading'].playerWorlds)
-const games = computed(() => store.getters['user/playerWorlds'] || [])
+const loading = computed(() => store.getters["user/loading"].playerWorlds);
+const games = computed(() => store.getters["user/playerWorlds"] || []);
 
 const selectWorld = async (data) => {
   try {
-    const link = await getWorldLink(data)
-    if (link && link.gameLink) {
-      console.log("directing to: ", link.gameLink)
-      window.location.href = link.gameLink
-    } else {
-      console.error('Invalid link returned')
-    }
+    // Use the store action to handle world selection
+    await store.dispatch("world/selectWorld", data);
   } catch (error) {
-    console.error('Failed to navigate:', error.message)
+    console.error("Failed to select world:", error.message);
   }
-}
+};
 </script>
 
 <style scoped>

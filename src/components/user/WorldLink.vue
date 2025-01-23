@@ -15,20 +15,20 @@
 </template>
 
 <script setup>
-import { BACKGROUND_IMAGE_URL } from '@/config'
+import { BACKGROUND_IMAGE_URL } from "@/config";
 
 const props = defineProps({
   player: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(["click"]);
 
 const handleClick = () => {
-  emit('click')
-}
+  emit("click");
+};
 </script>
 
 <style scoped>
@@ -42,7 +42,9 @@ const handleClick = () => {
   border: 4px solid var(--polaroid-border-color);
   box-shadow: var(--content-box-shadow);
   cursor: pointer;
-  transition: transform var(--transition-duration), box-shadow var(--transition-duration);
+  transition:
+    transform var(--transition-duration),
+    box-shadow var(--transition-duration);
   text-align: center;
 }
 

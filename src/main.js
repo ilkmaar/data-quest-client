@@ -1,13 +1,15 @@
 import { createApp, provide, h } from "vue";
 import { ApolloClients } from "@vue/apollo-composable";
 import App from "./App.vue";
-import store from "./store";
-import router from "./router";
+import store from "./store/index.js";
+import router from "./router/index.js";
 import {
   authenticatedClient,
   unauthenticatedClient,
 } from "./graphql/apollo.js";
-import "./assets/base.css";
+
+// Import tailwind styles
+import "./assets/main.css";
 
 const app = createApp({
   setup() {

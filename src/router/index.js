@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import { useStore } from "vuex";
 import LandingPage from "@/views/LandingPage.vue";
 import MyGames from "@/views/MyGames.vue";
+import GameWorld from "@/views/GameWorld.vue";
+import WorldDashbard from "@/views/WorldDashboard.vue";
 import PlayerProfile from "@/views/PlayerProfile.vue";
 
 const routes = [
@@ -9,7 +11,11 @@ const routes = [
   { path: "/about", component: LandingPage },
   { path: "/resources", component: LandingPage },
   { path: "/my-games", component: MyGames, meta: { requiresAuth: true } },
-  { path: "/world", component: MyGames, meta: { requiresAuth: true } },
+  {
+    path: "/world/:worldId?",
+    component: WorldDashbard,
+    meta: { requiresAuth: true },
+  },
   { path: "/profile", component: PlayerProfile, meta: { requiresAuth: true } },
 ];
 

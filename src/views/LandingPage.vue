@@ -3,7 +3,8 @@
     <div class="content">
       <h2>Explore Your Data in <b>Isles of Ilkmaar</b></h2>
       <p class="subtitle">
-        Discover patterns, uncover insights, and become a data explorer. Learn how data shapes your game world.
+        Discover patterns, uncover insights, and become a data explorer. Learn
+        how data shapes your game world.
       </p>
       <DiscordLoginButton v-if="!isAuthenticated" class="login-button">
         Log in with Discord
@@ -13,23 +14,23 @@
       </router-link>
     </div>
     <div class="image-section">
-      <img 
-        :src="BACKGROUND_IMAGE_URL" 
-        alt="Illustration of Isles of Ilkmaar" 
-        class="main-image" 
+      <img
+        :src="BACKGROUND_IMAGE_URL"
+        alt="Illustration of Isles of Ilkmaar"
+        class="main-image"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import DiscordLoginButton from '@/components/auth/DiscordLoginButton.vue'
-import { BACKGROUND_IMAGE_URL } from '@/config'
+import { computed } from "vue";
+import { useStore } from "vuex";
+import DiscordLoginButton from "@/components/auth/DiscordLoginButton.vue";
+import { BACKGROUND_IMAGE_URL } from "@/config";
 
-const store = useStore()
-const isAuthenticated = computed(() => store.getters['auth/isAuthenticated'])
+const store = useStore();
+const isAuthenticated = computed(() => store.getters["auth/isAuthenticated"]);
 </script>
 
 <style scoped>

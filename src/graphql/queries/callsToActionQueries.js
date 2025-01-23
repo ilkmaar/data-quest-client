@@ -1,3 +1,5 @@
+import { gql } from "@apollo/client/core";
+
 const CREATURES_NEEDING_HELP_QUERY = gql`
   creaturesNeedingHelp(threshold: $threshold, worldId: $creaturesNeedingHelpWorldId2) {
     social
@@ -8,17 +10,17 @@ const CREATURES_NEEDING_HELP_QUERY = gql`
     creatureName
   }
 }
-`
+`;
 
 const CREATURES_NEEDING_HELP = {
-    name: 'Creatures Needing Help',
-    query: CREATURES_NEEDING_HELP_QUERY,
-    variables: ['threshold', 'worldId'],
-    client: 'authenticated',
-}
+  name: "Creatures Needing Help",
+  query: CREATURES_NEEDING_HELP_QUERY,
+  variables: ["threshold", "worldId"],
+  client: "authenticated",
+};
 
 const callToActionQueries = {
-    CREATURES_NEEDING_HELP
-}
+  CREATURES_NEEDING_HELP,
+};
 
 export default callToActionQueries;

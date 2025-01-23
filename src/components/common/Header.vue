@@ -2,9 +2,9 @@
   <header class="header" :class="{ 'mobile-menu-open': isMobileMenuOpen }">
     <div class="logo">
       <!-- Conditionally render the title as a router-link or plain h1 -->
-      <router-link 
-        v-if="pageTitle === 'Isles of Ilkmaar Data Portal'" 
-        to="/" 
+      <router-link
+        v-if="pageTitle === 'Isles of Ilkmaar Data Portal'"
+        to="/"
         class="logo-link"
       >
         <h1>{{ pageTitle }}</h1>
@@ -13,8 +13,8 @@
     </div>
 
     <!-- Mobile menu button -->
-    <button 
-      class="mobile-menu-toggle" 
+    <button
+      class="mobile-menu-toggle"
       @click="toggleMobileMenu"
       aria-label="Toggle navigation menu"
       :aria-expanded="isMobileMenuOpen"
@@ -23,26 +23,28 @@
     </button>
 
     <!-- Navigation wrapper with mobile support -->
-    <div class="nav-wrapper" :class="{ 'active': isMobileMenuOpen }">
+    <div class="nav-wrapper" :class="{ active: isMobileMenuOpen }">
       <!-- Conditionally render the navigation links -->
       <nav class="navigation" role="navigation" v-if="!isMyGamesPage">
-        <router-link 
-          to="/about" 
+        <router-link
+          to="/about"
           class="nav-item nav-link"
           @click="closeMobileMenu"
-        >About</router-link>
-        <router-link 
-          to="/resources" 
+          >About</router-link
+        >
+        <router-link
+          to="/resources"
           class="nav-item nav-button"
           @click="closeMobileMenu"
-        >Resources</router-link>
+          >Resources</router-link
+        >
       </nav>
 
       <div v-if="isAuthenticated" class="account-menu-container">
-        <AccountMenu 
-          :isMenuOpen="isAccountMenuOpen" 
-          @toggle-menu="toggleAccountMenu" 
-          @close-menu="closeAccountMenu" 
+        <AccountMenu
+          :isMenuOpen="isAccountMenuOpen"
+          @toggle-menu="toggleAccountMenu"
+          @close-menu="closeAccountMenu"
         />
       </div>
     </div>
@@ -50,90 +52,90 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
-import AccountMenu from '../auth/AccountMenu.vue'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import AccountMenu from "../auth/AccountMenu.vue";
 
 // Store and route setup
-const store = useStore()
-const route = useRoute()
+const store = useStore();
+const route = useRoute();
 
 // Computed properties
-const isAuthenticated = computed(() => store.getters['auth/isAuthenticated'])
-const pageTitle = computed(() => 
-  route.path === '/my-games' ? "My Worlds" : "Isles of Ilkmaar Data Portal"
-)
+const isAuthenticated = computed(() => store.getters["auth/isAuthenticated"]);
+const pageTitle = computed(() =>
+  route.path === "/my-games" ? "My Worlds" : "Isles of Ilkmaar Data Portal"
+);
 
 // New computed property to check if the current page is My Games
-const isMyGamesPage = computed(() => route.path === '/my-games')
+const isMyGamesPage = computed(() => route.path === "/my-games");
 
 // Mobile menu state
-const isMobileMenuOpen = ref(false)
-const isAccountMenuOpen = ref(false)
+const isMobileMenuOpen = ref(false);
+const isAccountMenuOpen = ref(false);
 
 // Window resize handling
 const handleResize = () => {
   if (window.innerWidth > 768 && isMobileMenuOpen.value) {
-    isMobileMenuOpen.value = false
+    isMobileMenuOpen.value = false;
   }
-}
+};
 
 // Lifecycle hooks for resize listener
 onMounted(() => {
-  window.addEventListener('resize', handleResize)
-})
+  window.addEventListener("resize", handleResize);
+});
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize)
-})
+  window.removeEventListener("resize", handleResize);
+});
 
 // Menu handlers
 const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
   if (isMobileMenuOpen.value) {
-    isAccountMenuOpen.value = false
+    isAccountMenuOpen.value = false;
   }
-}
+};
 
 const closeMobileMenu = () => {
-  isMobileMenuOpen.value = false
-}
+  isMobileMenuOpen.value = false;
+};
 
 const toggleAccountMenu = () => {
-  isAccountMenuOpen.value = !isAccountMenuOpen.value
+  isAccountMenuOpen.value = !isAccountMenuOpen.value;
   if (isAccountMenuOpen.value) {
-    isMobileMenuOpen.value = false
+    isMobileMenuOpen.value = false;
   }
-}
+};
 
 const closeAccountMenu = () => {
-  isAccountMenuOpen.value = false
-}
+  isAccountMenuOpen.value = false;
+};
 </script>
 
 <style scoped>
 .header {
+  background: linear-gradient(90deg, #1a365d, #2c5282);
+  padding: 0.75rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 1rem 2rem;
-  background-color: var(--header-color);
-  color: var(--header-text-color);
-  font-family: museo, helvetica, arial, sans-serif;
-  box-sizing: border-box;
   position: relative;
+  height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .logo h1 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: white;
   margin: 0;
-  color: #ffffff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .logo-link {
@@ -150,35 +152,37 @@ const closeAccountMenu = () => {
 .navigation {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-.nav-item {
-  color: #ffffff;
+.nav-link {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: white;
   text-decoration: none;
-  font-size: clamp(16px, 2vw, 18px);
-  font-weight: 400;
-  line-height: 1;
-  transition: opacity 0.2s ease;
-  white-space: nowrap;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
-.nav-item:hover {
-  opacity: 0.9;
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .nav-button {
-  padding: 0.625rem 1.25rem;
-  background-color: var(--concord-orange);
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--accent-color);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .nav-button:hover {
-  background-color: #b54020;
-  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .account-menu-container {
@@ -210,7 +214,7 @@ const closeAccountMenu = () => {
 
 .hamburger::before,
 .hamburger::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 24px;
   height: 2px;

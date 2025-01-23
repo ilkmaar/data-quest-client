@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dotenv from "dotenv";
+import tailwindcss from "@tailwindcss/vite";
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ export default defineConfig({
   server: {
     host: true,
   },
-  plugins: [vue()],
+  plugins: [vue(), tailwindcss()],
   define: {
     "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
     "process.env.VUE_APP_SUPABASE_URL": JSON.stringify(
