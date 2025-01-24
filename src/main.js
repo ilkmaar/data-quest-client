@@ -8,9 +8,6 @@ import {
   unauthenticatedClient,
 } from "./graphql/apollo.js";
 
-// Import tailwind styles
-import "./assets/main.css";
-
 const app = createApp({
   setup() {
     provide(ApolloClients, {
@@ -23,7 +20,7 @@ const app = createApp({
 });
 
 app.use(store);
-store.dispatch("auth/init");
+await store.dispatch("auth/init");
 
 // Ensure auth is checked before using the router
 store

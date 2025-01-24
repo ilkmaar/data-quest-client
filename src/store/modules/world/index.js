@@ -1,21 +1,37 @@
-import { watchEffect } from "vue";
 import currentStateQueries from "@/graphql/queries/currentStateQueries";
 import { useDefinedQuery } from "@/composables/queries/useDefinedQuery";
 import progressQueries from "../../../graphql/queries/progressionsQueries";
 import router from "../../../router/index";
+import { watchEffect, watch } from "vue";
 
 const state = {
-  currentWorld: null,
+  currentWorldId: null,
+  currentWorldData: null,
   currentCreatureStats: null,
   currentFactionStats: null,
   currentCreatureLocations: null,
   currentPlayerLocations: null,
   playerProgressionData: null,
+  loading: {
+    currentCreatureStats: false,
+    currentLocations: false,
+    playerProgression: false,
+    initialization: false,
+  },
+  error: {
+    currentCreatureStats: null,
+    currentLocations: null,
+    playerProgression: null,
+    initialization: null,
+  },
 };
 
 const mutations = {
-  SET_CURRENT_WORLD(state, world) {
-    state.currentWorld = world;
+  SET_CURRENT_WORLD_ID(state, worldId) {
+    state.currentWorldId = worldId;
+  },
+  SET_CURRENT_WORLD_DATA(state, worldData) {
+    state.currentWorldData = worldData;
   },
   SET_CURRENT_STATE_DATA(state, stateData) {
     state.currentStateData = stateData;
@@ -58,25 +74,32 @@ const handleError = (commit, type, error) => {
 };
 
 const actions = {
-  async selectWorld({ commit, dispatch }, worldData) {
-    commit("SET_CURRENT_WORLD", worldData);
-    router.push("/world");
-    dispatch("fetchCurrentCreatureStats", worldData.world_id);
-    dispatch("fetchCurrentLocations", worldData.world_id);
-    dispatch("fetchPlayerProgression", {
-      worldId: worldData.world_id,
-      playerId: worldData.player_id,
-    });
+  async setCurrentWorldId({ commit, dispatch }, { worldId }) {
+    const currentWorldId = state.currentWorldId;
+
+    console.log("[world store] setting current world: ", worldId);
+    if (!currentWorldId || currentWorldId !== worldId) {
+      commit("RESET_WORLD_DATA");
+      commit("SET_CURRENT_WORLD_ID", worldId);
+      dispatch("initializeWorld");
+    }
   },
 
-  async fetchWorldData({ dispatch, getters }, worldId) {
-    dispatch("fetchUserPlayers", userId);
-    dispatch("fetchCurrentUser", userId);
+  async initializeWorld({ dispatch, state, commit, rootGetters }) {
+    const worldId = state.currentWorldId;
+    console.log("initializing world: ", worldId);
 
-    // Now we check if the user is a researcher
-    if (getters.isResearcher) {
-      dispatch("admin/fetchAllUsers", null, { root: true });
-      dispatch("admin/fetchAllWorlds", null, { root: true });
+    try {
+      // Fetch all required data
+      await Promise.all(
+        [
+          dispatch("fetchCurrentCreatureStats", worldId),
+          dispatch("fetchCurrentLocations", worldId),
+        ].filter(Boolean)
+      ); // Filter out undefined promises
+    } catch (error) {
+      console.error("Failed to initialize world:", error);
+      commit("SET_ERROR", { type: "initialization", error });
     }
   },
 
@@ -89,34 +112,43 @@ const actions = {
         { worldId: "world_CCProd_" + worldId }
       );
 
-      watchEffect(() => {
+      // Set up watchers before running the query
+      const stopLoadingWatch = watch(loading, (newValue) => {
         commit("SET_LOADING", {
           type: "currentCreatureStats",
-          value: loading.value,
+          value: newValue,
         });
       });
 
-      watchEffect(() => {
-        if (error.value) {
-          console.log("error: ", error.value);
-          handleError(commit, "currentCreatureStats", error.value);
+      const stopResultWatch = watch(
+        [result, error],
+        ([newResult, newError]) => {
+          if (newError) {
+            handleError(commit, "currentCreatureStats", newError);
+            // Clean up watchers on error
+            stopLoadingWatch();
+            stopResultWatch();
+          }
+
+          if (newResult) {
+            commit(
+              "SET_CURRENT_CREATURE_STATS",
+              newResult.creaturesCurrentStats.creatures
+            );
+            commit(
+              "SET_CURRENT_FACTION_STATS",
+              newResult.creaturesCurrentStats.factions
+            );
+            // Clean up watchers after successful result
+            stopLoadingWatch();
+            stopResultWatch();
+          }
         }
-        if (result.value) {
-          commit(
-            "SET_CURRENT_CREATURE_STATS",
-            result.value.creaturesCurrentStats.creatures
-          );
-          commit(
-            "SET_CURRENT_FACTION_STATS",
-            result.value.creaturesCurrentStats.factions
-          );
-        }
-      });
+      );
 
       await run();
     } catch (err) {
-      console.log("error: ", err);
-      handleError(commit, "currentCreatureStats", err.value);
+      handleError(commit, "currentCreatureStats", err);
     }
   },
 
@@ -130,88 +162,96 @@ const actions = {
         { worldId: "world_CCProd_" + worldId }
       );
 
-      watchEffect(() => {
+      const stopLoadingWatch = watch(loading, (newValue) => {
         commit("SET_LOADING", {
           type: "currentLocations",
-          value: loading.value,
+          value: newValue,
         });
       });
 
-      watchEffect(() => {
-        if (error.value) {
-          console.log("error: ", error.value);
-          handleError(commit, "currentLocations", error.value);
+      const stopResultWatch = watch(
+        [result, error],
+        ([newResult, newError]) => {
+          if (newError) {
+            handleError(commit, "currentLocations", newError);
+            stopLoadingWatch();
+            stopResultWatch();
+          }
+
+          if (newResult) {
+            commit(
+              "SET_CURRENT_CREATURE_LOCATIONS",
+              newResult.currentCreatureLocations
+            );
+            commit(
+              "SET_CURRENT_PLAYER_LOCATIONS",
+              newResult.currentPlayerLocations
+            );
+            stopLoadingWatch();
+            stopResultWatch();
+          }
         }
-        if (result.value) {
-          commit(
-            "SET_CURRENT_CREATURE_LOCATIONS",
-            result.value.currentCreatureLocations
-          );
-          commit(
-            "SET_CURRENT_PLAYER_LOCATIONS",
-            result.value.currentPlayerLocations
-          );
-        }
-      });
+      );
 
       await run();
     } catch (err) {
-      console.log("error: ", err);
-      handleError(commit, "currentLocations", err.value);
+      handleError(commit, "currentLocations", err);
     }
   },
 
   async fetchPlayerProgression({ commit }, { worldId, playerId }) {
     commit("SET_ERROR", { type: "playerProgression", error: null });
+
     try {
       const { loading, result, error, run } = useDefinedQuery(
         progressQueries.GET_FORAGING_PROGRESS,
-        { worldId: "world_CCProd_" + worldId, playerId: "player_" + playerId }
+        {
+          worldId: "world_CCProd_" + worldId,
+          playerId: "player_" + playerId,
+        }
       );
-      watchEffect(() => {
+
+      const stopLoadingWatch = watch(loading, (newValue) => {
         commit("SET_LOADING", {
           type: "playerProgression",
-          value: loading.value,
+          value: newValue,
         });
       });
-      watchEffect(() => {
-        if (error.value) {
-          console.log("error: ", error.value);
-          handleError(commit, "playerProgression", error.value);
+
+      const stopResultWatch = watch(
+        [result, error],
+        ([newResult, newError]) => {
+          if (newError) {
+            handleError(commit, "playerProgression", newError);
+            stopLoadingWatch();
+            stopResultWatch();
+          }
+
+          if (newResult) {
+            commit(
+              "SET_PLAYER_PROGRESSION_DATA",
+              newResult.playerForagingProgression
+            );
+            stopLoadingWatch();
+            stopResultWatch();
+          }
         }
-        if (result.value) {
-          commit(
-            "SET_PLAYER_PROGRESSION_DATA",
-            result.value.playerForagingProgression
-          );
-        }
-      });
+      );
+
       await run();
     } catch (err) {
-      console.log("error: ", err);
-      handleError(commit, "playerProgression", err.value);
+      handleError(commit, "playerProgression", err);
     }
   },
 
-  async gotoWorld({ commit }, data) {
-    router.push("/world");
-
-    // try {
-    //   const link = await getWorldLink(data);
-    //   if (link && link.gameLink) {
-    //     console.log("directing to: ", link.gameLink);
-    //     window.location.href = link.gameLink;
-    //   } else {
-    //     console.error("Invalid link returned");
-    //   }
-    // } catch (error) {
-    //   console.error("Failed to navigate:", error.message);
-    // }
+  async goToWorld({ commit }, { worldId }) {
+    console.log("[world store] going to world: ", worldId);
+    router.push(`/world/${worldId}`);
   },
 };
 
 const getters = {
-  currentWorldId: (state) => state.currentWorld?.world_id || null,
+  currentWorldId: (state) => state.currentWorldId || null,
   currentPlayerId: (state) => state.currentPlayer?.player_id || null,
   currentWorldName: (state) => state.currentWorld?.world_name || null,
   currentPlayerName: (state) => state.currentWorld?.player_name || null,

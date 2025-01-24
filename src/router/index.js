@@ -3,7 +3,7 @@ import { useStore } from "vuex";
 import LandingPage from "@/views/LandingPage.vue";
 import MyGames from "@/views/MyGames.vue";
 import GameWorld from "@/views/GameWorld.vue";
-import WorldDashbard from "@/views/WorldDashboard.vue";
+import WorldDashboard from "@/views/WorldDashboard.vue";
 import PlayerProfile from "@/views/PlayerProfile.vue";
 
 const routes = [
@@ -13,8 +13,9 @@ const routes = [
   { path: "/my-games", component: MyGames, meta: { requiresAuth: true } },
   {
     path: "/world/:worldId?",
-    component: WorldDashbard,
+    component: WorldDashboard,
     meta: { requiresAuth: true },
+    props: true,
   },
   { path: "/profile", component: PlayerProfile, meta: { requiresAuth: true } },
 ];
@@ -30,6 +31,15 @@ router.beforeEach(async (to, from, next) => {
 
   // Wait for the authentication state to be ready
   await store.dispatch("auth/checkAuth");
+
+  // Check if worldId parameter exists and dispatch to world store
+  if (to.params.worldId) {
+    console.log("[router] route worldId: ", to.params.worldId);
+    await store.dispatch("world/setCurrentWorldId", {
+      worldId: to.params.worldId,
+    });
+  }
+
   proceedNavigation(to, next, store);
 });
 

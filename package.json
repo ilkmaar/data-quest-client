@@ -11,8 +11,6 @@
     "@apollo/client": "^3.11.3",
     "@headlessui/vue": "^1.7.22",
     "@supabase/ssr": "^0.4.0",
-    "@tailwindcss/postcss": "^4.0.0",
-    "@tailwindcss/vite": "^4.0.0",
     "@vue/apollo-composable": "^4.0.2",
     "axios": "^1.7.3",
     "cookie": "^0.6.0",
@@ -21,13 +19,13 @@
     "jwt-simple": "^0.5.6",
     "lucide-vue-next": "^0.473.0",
     "pkce-challenge": "^4.1.0",
-    "tailwindcss": "^4.0.0",
     "vue": "^3.3.4",
     "vue-data-ui": "^2.4.37",
     "vue-router": "^4.4.2",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^5.2.0"
   }

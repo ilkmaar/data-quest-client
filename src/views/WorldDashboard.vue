@@ -1,114 +1,221 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- Masthead with more prominent styling -->
-      <header class="bg-white rounded-xl shadow-lg p-8 mb-8 text-center">
-        <div class="text-sm text-gray-600 mb-2">{{ currentDate }}</div>
-        <h1 class="newspaper-title mb-4">The Ilkmaar Observer</h1>
-        <div class="flex items-center justify-center space-x-4">
-          <span class="text-sm text-gray-600">Vol. XXIII</span>
-          <span class="text-sm bg-indigo-600 text-white px-4 py-1 rounded-full"
-            >Data Science Edition</span
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <!-- Updated header styling with more vertical space -->
+      <header
+        class="rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6 lg:mb-8 text-center bg-white"
+      >
+        <div class="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
+          {{ currentDate }}
+        </div>
+        <h1
+          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 tracking-tight"
+        >
+          The Ilkmaar Explorer
+        </h1>
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+          <span class="text-xs sm:text-sm text-gray-600 font-serif"
+            >Vol. XXIII</span
           >
-          <span class="text-sm text-gray-600">Price: 2 Credits</span>
+          <span
+            class="text-xs sm:text-sm bg-indigo-600 text-white px-3 py-1 rounded-full font-medium"
+          >
+            Data Science Edition
+          </span>
+          <span class="text-xs sm:text-sm text-gray-600">Price: 2 Coins</span>
         </div>
       </header>
 
-      <!-- Breaking News Banner with improved visibility -->
+      <!-- Updated banner styling with more vertical space -->
       <div
-        class="bg-gradient-to-r from-red-600 to-red-700 text-white py-4 px-6 rounded-xl shadow-lg mb-8 flex items-center justify-between"
+        class="bg-gradient-to-r from-red-600 to-red-700 shadow-lg mb-4 sm:mb-6 lg:mb-8 rounded-xl overflow-hidden"
       >
-        <div class="flex items-center">
-          <span class="font-bold mr-2 text-xl">BREAKING:</span>
-          <span class="text-lg"
-            >World Health Crisis at {{ worldHealth }}% - Join Investigation
-            Now!</span
+        <div class="p-4 sm:p-6 lg:p-8">
+          <div class="flex items-center mb-3 sm:mb-4">
+            <span
+              class="bg-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full backdrop-blur-sm font-medium"
+            >
+              🚨 URGENT ALERT
+            </span>
+          </div>
+          <div
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6"
           >
+            <div class="space-y-2 sm:space-y-3">
+              <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
+                World Health Crisis
+              </h2>
+              <p class="text-sm sm:text-base text-white/90">
+                World health has dropped to
+                <span class="font-bold">{{ worldHealth }}%</span>. Your data
+                science expertise is needed immediately!
+              </p>
+            </div>
+            <button
+              @click="joinWorld"
+              :disabled="loading"
+              class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white text-red-600 rounded-lg font-bold hover:bg-gray-100 transform hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100 shadow-md text-base sm:text-lg flex items-center justify-center gap-2"
+            >
+              <span>{{ loading ? "Loading..." : "Play Now" }}</span>
+              <span v-if="!loading" class="text-xl">🎮</span>
+            </button>
+          </div>
         </div>
-        <button
-          @click="joinWorld"
-          :disabled="loading"
-          class="px-6 py-2 bg-white text-red-700 rounded-lg font-bold hover:bg-gray-50 transform hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100"
-        >
-          {{ loading ? "Loading..." : "Join Investigation" }}
-        </button>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <!-- Main Column -->
-        <div class="lg:col-span-8 space-y-8">
-          <!-- Lead Story -->
-          <article class="bg-white rounded-xl shadow-lg p-8">
-            <h2 class="article-title mb-4">
-              Creature Health Crisis: A Deep Dive Analysis
-            </h2>
-            <p class="article-lead mb-8">
-              Our data scientists have uncovered concerning patterns in creature
-              health across all factions. The following visualization reveals
-              the full scope of the situation.
-            </p>
-            <div class="data-visualization mb-8">
-              <CreatureHealthStripPlot />
-            </div>
+        <div class="lg:col-span-8 space-y-4">
+          <!-- Lead Story as a social post -->
+          <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="p-4">
+              <div class="flex items-center space-x-3 mb-4">
+                <div
+                  class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"
+                >
+                  <span class="text-xl">🔬</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">Data Science Team</h3>
+                  <span class="text-sm text-gray-500">Just now</span>
+                </div>
+              </div>
+              <p class="text-gray-800 mb-4">
+                🚨 ALERT: Our latest analysis reveals concerning patterns in
+                creature health across all factions. Check out these critical
+                findings 👇
+              </p>
+              <div
+                class="data-visualization bg-white relative h-[420px] rounded-lg border border-gray-200"
+              >
+                <CreatureHealthStripPlot />
+              </div>
 
-            <!-- Quick Stats with improved cards -->
-            <div class="grid grid-cols-3 gap-6">
-              <div
-                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
-              >
-                <div class="text-4xl font-bold text-blue-600 mb-2">
-                  {{ totalCreatures }}
+              <!-- Add insights and engagement section -->
+              <div class="border-t border-gray-100 pt-3 mt-4">
+                <!-- Insight Pills -->
+                <div class="mb-4 flex flex-wrap gap-2">
+                  <div
+                    v-for="(insight, index) in healthInsights"
+                    :key="index"
+                    class="group relative inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 hover:bg-gray-200 transition-colors"
+                  >
+                    <AlertCircleIcon class="h-4 w-4 text-gray-500" />
+                    <span class="text-sm text-gray-600">{{ insight }}</span>
+
+                    <!-- Floating Tooltip -->
+                    <div
+                      class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 p-2 bg-gray-900 text-white text-xs rounded shadow-lg"
+                    >
+                      Explore this pattern in the data explorer
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-gray-600 font-medium">
-                  Active Creatures
+
+                <!-- Quick Stats styled as engagement metrics -->
+                <div class="border-t border-gray-100 pt-3 mt-2">
+                  <div class="grid grid-cols-3 gap-3 justify-items-center">
+                    <div class="flex items-center justify-center space-x-2">
+                      <span class="text-xl">👾</span>
+                      <div class="text-center">
+                        <div class="font-bold text-gray-900">
+                          {{ totalCreatures }}
+                        </div>
+                        <div class="text-xs text-gray-600">Creatures</div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+                      <span class="text-xl">⚔️</span>
+                      <div class="text-center">
+                        <div class="font-bold text-gray-900">
+                          {{ activeFactions }}
+                        </div>
+                        <div class="text-xs text-gray-600">Factions</div>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+                      <span class="text-xl">❤️</span>
+                      <div class="text-center">
+                        <div class="font-bold text-gray-900">
+                          {{ highestHealth }}%
+                        </div>
+                        <div class="text-xs text-gray-600">Peak Health</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
-              >
-                <div class="text-4xl font-bold text-blue-600 mb-2">
-                  {{ activeFactions }}
+
+                <!-- Moved and restyled action buttons -->
+                <div class="border-t border-gray-100 pt-4 mt-4">
+                  <PostActions exploreText="Explore data" />
                 </div>
-                <div class="text-sm text-gray-600 font-medium">
-                  Active Factions
-                </div>
-              </div>
-              <div
-                class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100"
-              >
-                <div class="text-4xl font-bold text-blue-600 mb-2">
-                  {{ highestHealth }}%
-                </div>
-                <div class="text-sm text-gray-600 font-medium">Peak Health</div>
               </div>
             </div>
           </article>
 
-          <!-- Secondary Story -->
-          <article class="bg-white rounded-xl shadow-lg p-8">
-            <h2 class="article-title mb-4">
-              Unusual Movement Patterns Detected
-            </h2>
-            <p class="article-lead mb-8">
-              Latest satellite data shows unprecedented creature gatherings in
-              key locations. Our interactive map reveals potential hotspots of
-              activity.
-            </p>
-            <div class="data-visualization">
-              <CurrentLocationsMap />
+          <!-- Secondary Story as a social post -->
+          <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="p-4">
+              <div class="flex items-center space-x-3 mb-4">
+                <div
+                  class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"
+                >
+                  <span class="text-xl">🗺️</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900">
+                    Movement Analysis Team
+                  </h3>
+                  <span class="text-sm text-gray-500">2 hours ago</span>
+                </div>
+              </div>
+              <p class="text-gray-800 mb-3">
+                🌍 Breaking: We're tracking unusual creature gatherings across
+                multiple locations. Here's our live heatmap showing the current
+                hotspots of activity ��
+              </p>
+              <div
+                class="data-visualization bg-white relative h-[400px] rounded-lg border border-gray-200"
+              >
+                <CurrentLocationsMap />
+              </div>
+
+              <!-- Add insights and engagement section for map -->
+              <div class="border-t border-gray-100 pt-3 mt-4">
+                <div class="mb-4 flex flex-wrap gap-2">
+                  <div
+                    v-for="(insight, index) in locationInsights"
+                    :key="index"
+                    class="group relative inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 hover:bg-gray-200 transition-colors"
+                  >
+                    <AlertCircleIcon class="h-4 w-4 text-gray-500" />
+                    <span class="text-sm text-gray-600">{{ insight }}</span>
+
+                    <div
+                      class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 p-2 bg-gray-900 text-white text-xs rounded shadow-lg"
+                    >
+                      Explore this pattern in the data explorer
+                    </div>
+                  </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-4 mt-4">
+                  <PostActions exploreText="Explore data" />
+                </div>
+              </div>
             </div>
           </article>
         </div>
 
-        <!-- Sidebar -->
-        <aside class="lg:col-span-4 space-y-6">
+        <!-- Sidebar styled more like social widgets -->
+        <aside class="lg:col-span-4 space-y-4">
           <!-- Faction Watch -->
-          <div class="bg-white p-6 rounded-xl shadow-lg">
-            <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+          <div class="bg-white p-4 rounded-xl shadow-lg">
+            <h3 class="font-serif text-xl font-bold mb-3 text-gray-900">
               Faction Watch
             </h3>
-            <div class="space-y-6">
-              <div class="border-b border-gray-200 pb-4">
+            <div class="space-y-3">
+              <div class="border-b border-gray-200 pb-2">
                 <div class="font-medium text-gray-600 mb-1">
                   Most Active Faction
                 </div>
@@ -116,22 +223,22 @@
                   {{ mostActiveFaction }}
                 </div>
               </div>
-              <div class="space-y-4">
+              <div class="space-y-3">
                 <h4 class="font-bold text-gray-900">Data Detective Tips</h4>
-                <ul class="space-y-4">
-                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                <ul class="space-y-2">
+                  <li class="flex items-start bg-gray-50 p-2">
                     <span class="text-2xl mr-3">🔍</span>
                     <span class="text-sm"
                       >Track faction movements for pattern analysis</span
                     >
                   </li>
-                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                  <li class="flex items-start bg-gray-50 p-2">
                     <span class="text-2xl mr-3">📊</span>
                     <span class="text-sm"
                       >Compare health metrics across regions</span
                     >
                   </li>
-                  <li class="flex items-start bg-gray-50 p-3 rounded-lg">
+                  <li class="flex items-start bg-gray-50 p-2">
                     <span class="text-2xl mr-3">🌟</span>
                     <span class="text-sm"
                       >Monitor social interactions between creatures</span
@@ -142,29 +249,23 @@
             </div>
           </div>
 
-          <!-- Data Conditions -->
+          <!-- Data Conditions card -->
           <div
-            class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-lg border border-blue-100"
+            class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-blue-500"
           >
-            <h3 class="font-serif text-2xl font-bold mb-6 text-gray-900">
+            <h3 class="font-serif text-xl font-bold mb-3 text-gray-900">
               Data Conditions
             </h3>
-            <div class="space-y-4">
-              <div
-                class="flex justify-between items-center p-2 bg-white rounded-lg"
-              >
+            <div class="space-y-2">
+              <div class="flex justify-between items-center p-2">
                 <span class="text-gray-600">Signal Strength:</span>
                 <span class="font-bold text-green-600">Excellent</span>
               </div>
-              <div
-                class="flex justify-between items-center p-2 bg-white rounded-lg"
-              >
+              <div class="flex justify-between items-center p-2">
                 <span class="text-gray-600">Data Quality:</span>
                 <span class="font-bold text-green-600">98%</span>
               </div>
-              <div
-                class="flex justify-between items-center p-2 bg-white rounded-lg"
-              >
+              <div class="flex justify-between items-center p-2">
                 <span class="text-gray-600">Network Status:</span>
                 <span class="font-bold text-green-600">Online</span>
               </div>
@@ -177,46 +278,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useWorldLinks } from "../composables/useWorldLinks";
 import CreatureHealthStripPlot from "../components/dashboard/CreatureHealthStripPlot.vue";
 import CurrentLocationsMap from "../components/dashboard/CurrentLocationsMap.vue";
-import { useDashboardData } from "../composables/useDashboardData";
-import DataStoryCard from "../components/dashboard/DataStoryCard.vue";
+import PostActions from "../components/dashboard/PostActions.vue";
+import {
+  AlertCircleIcon,
+  MessageCircleIcon,
+  Share2Icon,
+  SparklesIcon,
+  ExternalLinkIcon,
+} from "lucide-vue-next";
 
-const route = useRoute();
 const store = useStore();
 const { getWorldLink } = useWorldLinks();
 const loading = ref(false);
 
-const { currentCreatureStats } = useDashboardData();
+// Get worldId from both route params and store
+const worldId = computed(() => store.getters["world/currentWorldId"]);
 
-// Get worldId from route params
-const worldId = computed(() => {
-  console.log("route.params.worldId: ", route.params.worldId);
-  return route.params.worldId as string;
-});
-
-// Load world data when component mounts or worldId changes
-onMounted(async () => {
-  if (worldId.value) {
-    await store.dispatch("world/fetchCurrentCreatureStats", worldId.value);
-    await store.dispatch("world/fetchCurrentLocations", worldId.value);
-  }
-});
-
+// Simplify join world function
 const joinWorld = async () => {
   if (!worldId.value) return;
 
   loading.value = true;
   try {
     const link = await getWorldLink({ worldId: worldId.value });
-    if (link && link.gameLink) {
+    if (link?.gameLink) {
       window.location.href = link.gameLink;
-    } else {
-      console.error("Invalid link returned");
     }
   } catch (error) {
     console.error("Failed to get world link:", error);
@@ -225,18 +316,21 @@ const joinWorld = async () => {
   }
 };
 
-// Use store getters for stats
+// Simplify computed properties to use optional chaining and null coalescing
 const totalCreatures = computed(
-  () => store.getters["world/currentCreatureStats"]?.length || 0
+  () => store.getters["world/currentCreatureStats"]?.length ?? 0
 );
-const activeFactions = computed(() => {
-  const stats = store.getters["world/currentCreatureStats"];
-  return stats ? new Set(stats.map((c) => c.faction)).size : 0;
-});
+
+const activeFactions = computed(
+  () =>
+    new Set(
+      store.getters["world/currentCreatureStats"]?.map((c) => c.faction) ?? []
+    ).size
+);
 
 const worldHealth = computed(() => {
   const stats = store.getters["world/currentCreatureStats"];
-  if (!stats || !stats.length) return 0;
+  if (!stats?.length) return 0;
 
   const avgHealth =
     stats.reduce((sum, creature) => sum + (creature.health ?? 0), 0) /
@@ -246,11 +340,11 @@ const worldHealth = computed(() => {
 
 const mostActiveFaction = computed(() => {
   const stats = store.getters["world/currentCreatureStats"];
-  if (!stats || !stats.length) return "None";
+  if (!stats?.length) return "None";
 
   const factionCounts = stats.reduce(
     (acc, creature) => {
-      acc[creature.faction] = (acc[creature.faction] || 0) + 1;
+      acc[creature.faction] = (acc[creature.faction] ?? 0) + 1;
       return acc;
     },
     {} as Record<string, number>
@@ -261,21 +355,36 @@ const mostActiveFaction = computed(() => {
 
 const highestHealth = computed(() => {
   const stats = store.getters["world/currentCreatureStats"];
-  if (!stats || !stats.length) return 0;
-
+  if (!stats?.length) return 0;
   return Math.round(100 * Math.max(...stats.map((c) => c.health ?? 0)));
 });
 
-const currentDate = computed(() => {
-  return new Date().toLocaleDateString("en-US", {
+const currentDate = computed(() =>
+  new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
-  });
-});
+  })
+);
 
-const startExploring = () => {
-  // Implementation for exploration start
-};
+// Add insights data
+const healthInsights = ref([
+  "Unusual health decline in Northern region",
+  "3 factions showing recovery trends",
+  "Critical health alerts in coastal areas",
+]);
+
+const locationInsights = ref([
+  "High activity cluster in Central Forest",
+  "Unusual migration patterns detected",
+  "New gathering point identified",
+]);
 </script>
+
+<style scoped>
+/* Add custom styles for the newspaper title */
+.font-serif {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+</style>

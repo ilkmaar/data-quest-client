@@ -9,21 +9,17 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import UserWorldsList from "../components/user/UserWorldsList.vue";
 import NoWorlds from "../components/user/NoWorlds.vue";
 import LoadingSpinner from "../components/common/LoadingSpinner.vue";
 
 const store = useStore();
-const router = useRouter();
-
 const loading = computed(() => store.getters["user/loading"].playerWorlds);
 const games = computed(() => store.getters["user/playerWorlds"] || []);
 
 const selectWorld = async (data) => {
   try {
-    // Use the store action to handle world selection
-    await store.dispatch("world/selectWorld", data);
+    await store.dispatch("world/goToWorld", { worldId: data.world_id });
   } catch (error) {
     console.error("Failed to select world:", error.message);
   }
