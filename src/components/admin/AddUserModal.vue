@@ -1,7 +1,7 @@
 <template>
   <div class="fixed inset-0 z-50 flex items-center justify-center">
     <!-- Modal content -->
-    <div class="relative z-10 flex items-center justify-center p-4 bg-white">
+    <div class="relative z-10 flex items-center justify-center p-4">
       <div>
         <div>
           <select v-model="selectedUser">
@@ -14,9 +14,7 @@
           <button @click="selectUser" :disabled="!selectedUser">
             Select User
           </button>
-          <button @click="$emit('close')">
-            Cancel
-          </button>
+          <button @click="$emit('close')">Cancel</button>
         </div>
       </div>
     </div>
@@ -24,21 +22,21 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits } from "vue";
 
 defineProps({
-    availableUsers: Array
-})
+  availableUsers: Array,
+});
 
-const emit = defineEmits(['close', 'addUser'])
-const selectedUser = ref(null)
+const emit = defineEmits(["close", "addUser"]);
+const selectedUser = ref(null);
 
 const selectUser = () => {
   if (selectedUser.value) {
-    console.log("selecting user", selectedUser.value)
-    emit('addUser', selectedUser.value.id)
+    console.log("selecting user", selectedUser.value);
+    emit("addUser", selectedUser.value.id);
   }
-}
+};
 </script>
 
 <style scoped>

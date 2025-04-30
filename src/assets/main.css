@@ -1,35 +1,48 @@
-@import "./base.css";
+@import "tailwindcss";
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+@layer theme, base, components, utilities;
 
-  font-weight: normal;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+@layer utilities {
+  .bg-blue-500\/50 {
+    background-color: color-mix(
+      in oklab,
+      var(--color-blue-500) 50%,
+      transparent
+    );
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .newspaper-title {
+    font-family: "Times New Roman", serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    color: theme(colors.gray.900);
+  }
+
+  .article-title {
+    font-family: "Times New Roman", serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: theme(colors.gray.900);
+  }
+
+  .article-lead {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: theme(colors.gray.700);
+  }
+
+  .data-visualization {
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+
+  /* Faction Colors */
+  :root {
+    --faction-light: #ffff00;
+    --faction-stability: #808080;
+    --faction-growth: #00ff00;
+    --faction-shadow: #800080;
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="user-info">
-    <img :src="avatarUrl" alt="User Avatar" class="avatar"/>
+    <img :src="avatarUrl" alt="User Avatar" class="avatar" />
     <div class="details">
       <p class="username">{{ username }}</p>
       <p class="email">{{ email }}</p>
@@ -9,13 +9,20 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-
-const store = useStore();
-const avatarUrl = computed(() => store.getters['auth/avatarUrl']);
-const username = computed(() => store.getters['auth/username']);
-const email = computed(() => store.getters['auth/email']);
+defineProps({
+  avatarUrl: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style scoped>

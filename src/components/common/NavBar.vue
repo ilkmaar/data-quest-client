@@ -1,5 +1,6 @@
 <template>
   <nav class="navbar">
+
     <div class="navbar-left">
       <template v-if="isResearcher">
         <Disclosure as="div" v-slot="{ open, close }">
@@ -63,7 +64,7 @@
         </Disclosure>
       </template>
 
-      <div v-if="isLandingPage" class="logo">DataQuest</div>
+      <div v-if="isLandingPage" class="logo">Isles of Ilkmaar Data Portal</div>
       <div v-else class="logo">My Games</div>
     </div>
 

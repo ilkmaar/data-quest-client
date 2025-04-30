@@ -1,8 +1,12 @@
 <template>
   <div class="no-worlds">
-    <p>You have no worlds. Contact the Ilkmaar team to be added!</p>
+    <p>You have not been added to a Guild yet! Join our Discord server to be added.</p>
   </div>
 </template>
+
+<script>
+  
+</script>
 
 <style scoped>
 .no-worlds {

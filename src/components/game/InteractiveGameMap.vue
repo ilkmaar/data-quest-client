@@ -90,7 +90,7 @@ const isViewingNotes = ref(false)
 const newNote = ref('')
 const selectedNote = ref(null)
 
-// Mock data - replace with actual data from your game
+// Mock data - replace with actual data from the game
 const islands = [
   { id: 1, name: 'Growth Island', x: 50, y: 50, color: '#a5d6a7' },
   { id: 2, name: 'Stability Island', x: 300, y: 50, color: '#90caf9' },
