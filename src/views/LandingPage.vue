@@ -6,9 +6,11 @@
         Discover patterns, uncover insights, and become a data explorer. Learn
         how data shapes your game world.
       </p>
-      <DiscordLoginButton v-if="!isAuthenticated" class="login-button">
-        Log in with Discord
-      </DiscordLoginButton>
+      <div v-if="!isAuthenticated">
+        <router-link to="/login" class="login-button">
+          Start Your Journey
+        </router-link>
+      </div>
       <router-link v-else to="/my-games" class="profile-button">
         Go to My Games
       </router-link>
@@ -26,7 +28,6 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import DiscordLoginButton from "@/components/auth/DiscordLoginButton.vue";
 import { BACKGROUND_IMAGE_URL } from "@/config";
 
 const store = useStore();
@@ -69,9 +70,27 @@ h2 {
   color: rgb(8, 13, 9);
 }
 
+.login-button,
+.profile-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .login-button:hover,
 .profile-button:hover {
   background-color: #b54020;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .image-section {

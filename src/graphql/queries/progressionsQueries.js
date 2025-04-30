@@ -5,21 +5,26 @@ const GET_FORAGING_PROGRESS_QUERY = gql`
   query PlayerForagingProgression($playerId: String!, $worldId: String!) {
     playerForagingProgression(playerId: $playerId, worldId: $worldId) {
       currentLevel
-      totalLevels
-      levels {
-        completed
-        name
-        progress
-        threshold
-        description
-      }
       details {
         allResources
-        resourceTypeQualities
         resourcesByCategory
-        resourcesByIsland
         resourcesByVariety
+        resourcesByType
+        resourcesByIsland
+        resourceQualities
+        resourceCategoryQualities
+        resourceVarietyQualities
+        resourceTypeQualities
       }
+      levels {
+        id
+        name
+        description
+        threshold
+        completed
+        progress
+      }
+      totalLevels
     }
   }
 `;

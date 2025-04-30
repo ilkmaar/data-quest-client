@@ -1,277 +1,118 @@
 <template>
   <div class="min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-      <!-- Updated header styling with more vertical space -->
-      <header
-        class="rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6 lg:mb-8 text-center bg-white"
-      >
-        <div class="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
-          {{ currentDate }}
-        </div>
-        <h1
-          class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 tracking-tight"
-        >
-          The Ilkmaar Explorer
-        </h1>
-        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-          <span class="text-xs sm:text-sm text-gray-600 font-serif"
-            >Vol. XXIII</span
-          >
-          <span
-            class="text-xs sm:text-sm bg-indigo-600 text-white px-3 py-1 rounded-full font-medium"
-          >
-            Data Science Edition
-          </span>
-          <span class="text-xs sm:text-sm text-gray-600">Price: 2 Coins</span>
-        </div>
-      </header>
+      <DashboardHeader />
 
-      <!-- Updated banner styling with more vertical space -->
-      <div
-        class="bg-gradient-to-r from-red-600 to-red-700 shadow-lg mb-4 sm:mb-6 lg:mb-8 rounded-xl overflow-hidden"
-      >
-        <div class="p-4 sm:p-6 lg:p-8">
-          <div class="flex items-center mb-3 sm:mb-4">
-            <span
-              class="bg-white/20 text-white text-xs sm:text-sm px-3 py-1 rounded-full backdrop-blur-sm font-medium"
-            >
-              🚨 URGENT ALERT
-            </span>
-          </div>
-          <div
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6"
-          >
-            <div class="space-y-2 sm:space-y-3">
-              <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
-                World Health Crisis
-              </h2>
-              <p class="text-sm sm:text-base text-white/90">
-                World health has dropped to
-                <span class="font-bold">{{ worldHealth }}%</span>. Your data
-                science expertise is needed immediately!
-              </p>
-            </div>
-            <button
-              @click="joinWorld"
-              :disabled="loading"
-              class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white text-red-600 rounded-lg font-bold hover:bg-gray-100 transform hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100 shadow-md text-base sm:text-lg flex items-center justify-center gap-2"
-            >
-              <span>{{ loading ? "Loading..." : "Play Now" }}</span>
-              <span v-if="!loading" class="text-xl">🎮</span>
-            </button>
-          </div>
-        </div>
+      <HealthAlertBanner
+        :world-health="worldHealth"
+        :loading="loading"
+        @join="joinWorld"
+      />
+
+      <!-- Add Survey Notification here -->
+      <div v-if="showSurvey" class="mb-4">
+        <SurveyNotification @dismiss="dismissSurvey" />
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <!-- Main Column -->
         <div class="lg:col-span-8 space-y-4">
-          <!-- Lead Story as a social post -->
-          <article class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="p-4">
-              <div class="flex items-center space-x-3 mb-4">
-                <div
-                  class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"
-                >
-                  <span class="text-xl">🔬</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-gray-900">Data Science Team</h3>
-                  <span class="text-sm text-gray-500">Just now</span>
-                </div>
-              </div>
-              <p class="text-gray-800 mb-4">
-                🚨 ALERT: Our latest analysis reveals concerning patterns in
-                creature health across all factions. Check out these critical
-                findings 👇
-              </p>
-              <div
-                class="data-visualization bg-white relative h-[420px] rounded-lg border border-gray-200"
-              >
-                <CreatureHealthStripPlot />
-              </div>
+          <SocialPost
+            icon="🎥"
+            title="Field Research Team"
+            timestamp="5 minutes ago"
+            :insights="videoInsights"
+            explore-text="Watch full video"
+            video-url="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          >
+            <template #description>
+              📹 EXCLUSIVE: Captured rare footage of inter-faction interaction
+              in the wild. This behavior could explain recent health
+              fluctuations.
+            </template>
+          </SocialPost>
 
-              <!-- Add insights and engagement section -->
-              <div class="border-t border-gray-100 pt-3 mt-4">
-                <!-- Insight Pills -->
-                <div class="mb-4 flex flex-wrap gap-2">
-                  <div
-                    v-for="(insight, index) in healthInsights"
-                    :key="index"
-                    class="group relative inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 hover:bg-gray-200 transition-colors"
-                  >
-                    <AlertCircleIcon class="h-4 w-4 text-gray-500" />
-                    <span class="text-sm text-gray-600">{{ insight }}</span>
-
-                    <!-- Floating Tooltip -->
-                    <div
-                      class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 p-2 bg-gray-900 text-white text-xs rounded shadow-lg"
-                    >
-                      Explore this pattern in the data explorer
+          <SocialPost
+            icon="🔬"
+            title="Data Science Team"
+            timestamp="Just now"
+            :insights="healthInsights"
+            explore-text="Explore data"
+          >
+            <template #description>
+              🚨 ALERT: Our latest analysis reveals concerning patterns in
+              creature health across all factions. Check out these critical
+              findings 👇
+            </template>
+            <template #visualization>
+              <CreatureHealthStripPlot />
+            </template>
+            <template #stats>
+              <div class="border-t border-gray-100 pt-3 mt-2">
+                <div class="grid grid-cols-3 gap-3 justify-items-center">
+                  <div class="flex items-center justify-center space-x-2">
+                    <span class="text-xl">👾</span>
+                    <div class="text-center">
+                      <div class="font-bold text-gray-900">
+                        {{ totalCreatures }}
+                      </div>
+                      <div class="text-xs text-gray-600">Creatures</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center space-x-2">
+                    <span class="text-xl">⚔️</span>
+                    <div class="text-center">
+                      <div class="font-bold text-gray-900">
+                        {{ activeFactions }}
+                      </div>
+                      <div class="text-xs text-gray-600">Factions</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center space-x-2">
+                    <span class="text-xl">❤️</span>
+                    <div class="text-center">
+                      <div class="font-bold text-gray-900">
+                        {{ highestHealth }}%
+                      </div>
+                      <div class="text-xs text-gray-600">Peak Health</div>
                     </div>
                   </div>
                 </div>
-
-                <!-- Quick Stats styled as engagement metrics -->
-                <div class="border-t border-gray-100 pt-3 mt-2">
-                  <div class="grid grid-cols-3 gap-3 justify-items-center">
-                    <div class="flex items-center justify-center space-x-2">
-                      <span class="text-xl">👾</span>
-                      <div class="text-center">
-                        <div class="font-bold text-gray-900">
-                          {{ totalCreatures }}
-                        </div>
-                        <div class="text-xs text-gray-600">Creatures</div>
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-center space-x-2">
-                      <span class="text-xl">⚔️</span>
-                      <div class="text-center">
-                        <div class="font-bold text-gray-900">
-                          {{ activeFactions }}
-                        </div>
-                        <div class="text-xs text-gray-600">Factions</div>
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-center space-x-2">
-                      <span class="text-xl">❤️</span>
-                      <div class="text-center">
-                        <div class="font-bold text-gray-900">
-                          {{ highestHealth }}%
-                        </div>
-                        <div class="text-xs text-gray-600">Peak Health</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Moved and restyled action buttons -->
-                <div class="border-t border-gray-100 pt-4 mt-4">
-                  <PostActions exploreText="Explore data" />
-                </div>
               </div>
-            </div>
-          </article>
+            </template>
+          </SocialPost>
 
-          <!-- Secondary Story as a social post -->
-          <article class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div class="p-4">
-              <div class="flex items-center space-x-3 mb-4">
-                <div
-                  class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center"
-                >
-                  <span class="text-xl">🗺️</span>
-                </div>
-                <div>
-                  <h3 class="font-bold text-gray-900">
-                    Movement Analysis Team
-                  </h3>
-                  <span class="text-sm text-gray-500">2 hours ago</span>
-                </div>
-              </div>
-              <p class="text-gray-800 mb-3">
-                🌍 Breaking: We're tracking unusual creature gatherings across
-                multiple locations. Here's our live heatmap showing the current
-                hotspots of activity ��
-              </p>
-              <div
-                class="data-visualization bg-white relative h-[400px] rounded-lg border border-gray-200"
-              >
-                <CurrentLocationsMap />
-              </div>
-
-              <!-- Add insights and engagement section for map -->
-              <div class="border-t border-gray-100 pt-3 mt-4">
-                <div class="mb-4 flex flex-wrap gap-2">
-                  <div
-                    v-for="(insight, index) in locationInsights"
-                    :key="index"
-                    class="group relative inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 hover:bg-gray-200 transition-colors"
-                  >
-                    <AlertCircleIcon class="h-4 w-4 text-gray-500" />
-                    <span class="text-sm text-gray-600">{{ insight }}</span>
-
-                    <div
-                      class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-64 p-2 bg-gray-900 text-white text-xs rounded shadow-lg"
-                    >
-                      Explore this pattern in the data explorer
-                    </div>
-                  </div>
-                </div>
-
-                <div class="border-t border-gray-100 pt-4 mt-4">
-                  <PostActions exploreText="Explore data" />
-                </div>
-              </div>
-            </div>
-          </article>
+          <SocialPost
+            icon="🗺️"
+            title="Movement Analysis Team"
+            timestamp="2 hours ago"
+            :insights="locationInsights"
+            explore-text="Explore data"
+          >
+            <template #description>
+              🌍 Breaking: We're tracking unusual creature gatherings across
+              multiple locations. Here's our live heatmap showing the current
+              hotspots of activity
+            </template>
+            <template #visualization>
+              <CurrentLocationsMap />
+            </template>
+          </SocialPost>
         </div>
 
-        <!-- Sidebar styled more like social widgets -->
-        <aside class="lg:col-span-4 space-y-4">
-          <!-- Faction Watch -->
-          <div class="bg-white p-4 rounded-xl shadow-lg">
-            <h3 class="font-serif text-xl font-bold mb-3 text-gray-900">
-              Faction Watch
-            </h3>
-            <div class="space-y-3">
-              <div class="border-b border-gray-200 pb-2">
-                <div class="font-medium text-gray-600 mb-1">
-                  Most Active Faction
-                </div>
-                <div class="text-xl font-bold text-indigo-600">
-                  {{ mostActiveFaction }}
-                </div>
-              </div>
-              <div class="space-y-3">
-                <h4 class="font-bold text-gray-900">Data Detective Tips</h4>
-                <ul class="space-y-2">
-                  <li class="flex items-start bg-gray-50 p-2">
-                    <span class="text-2xl mr-3">🔍</span>
-                    <span class="text-sm"
-                      >Track faction movements for pattern analysis</span
-                    >
-                  </li>
-                  <li class="flex items-start bg-gray-50 p-2">
-                    <span class="text-2xl mr-3">📊</span>
-                    <span class="text-sm"
-                      >Compare health metrics across regions</span
-                    >
-                  </li>
-                  <li class="flex items-start bg-gray-50 p-2">
-                    <span class="text-2xl mr-3">🌟</span>
-                    <span class="text-sm"
-                      >Monitor social interactions between creatures</span
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Data Conditions card -->
-          <div
-            class="bg-white p-4 rounded-xl shadow-lg border-t-4 border-blue-500"
-          >
-            <h3 class="font-serif text-xl font-bold mb-3 text-gray-900">
-              Data Conditions
-            </h3>
-            <div class="space-y-2">
-              <div class="flex justify-between items-center p-2">
-                <span class="text-gray-600">Signal Strength:</span>
-                <span class="font-bold text-green-600">Excellent</span>
-              </div>
-              <div class="flex justify-between items-center p-2">
-                <span class="text-gray-600">Data Quality:</span>
-                <span class="font-bold text-green-600">98%</span>
-              </div>
-              <div class="flex justify-between items-center p-2">
-                <span class="text-gray-600">Network Status:</span>
-                <span class="font-bold text-green-600">Online</span>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <!-- Sidebar -->
+        <div class="lg:col-span-4 space-y-4">
+          <DashboardSidebar :most-active-faction="mostActiveFaction" />
+          <Poll
+            :question="pollData.question"
+            :options="pollData.options"
+            :icon="pollData.icon"
+            :posted-by="pollData.postedBy"
+            :timestamp="pollData.timestamp"
+            duration="24h"
+          />
+          <ForagingProgress />
+        </div>
       </div>
     </div>
   </div>
@@ -281,16 +122,15 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useWorldLinks } from "../composables/useWorldLinks";
+import DashboardHeader from "../components/dashboard/DashboardHeader.vue";
+import HealthAlertBanner from "../components/dashboard/HealthAlertBanner.vue";
+import SocialPost from "../components/dashboard/SocialPost.vue";
+import DashboardSidebar from "../components/dashboard/DashboardSidebar.vue";
 import CreatureHealthStripPlot from "../components/dashboard/CreatureHealthStripPlot.vue";
 import CurrentLocationsMap from "../components/dashboard/CurrentLocationsMap.vue";
-import PostActions from "../components/dashboard/PostActions.vue";
-import {
-  AlertCircleIcon,
-  MessageCircleIcon,
-  Share2Icon,
-  SparklesIcon,
-  ExternalLinkIcon,
-} from "lucide-vue-next";
+import ForagingProgress from "../components/dashboard/ForagingProgress.vue";
+import SurveyNotification from "../components/dashboard/SurveyNotification.vue";
+import Poll from "../components/dashboard/Poll.vue";
 
 const store = useStore();
 const { getWorldLink } = useWorldLinks();
@@ -305,7 +145,10 @@ const joinWorld = async () => {
 
   loading.value = true;
   try {
-    const link = await getWorldLink({ worldId: worldId.value });
+    const worldData = store.getters["world/currentWorldData"];
+    console.log("worldData: ", worldData);
+    const link = await getWorldLink(worldData);
+    console.log("link: ", link);
     if (link?.gameLink) {
       window.location.href = link.gameLink;
     }
@@ -350,7 +193,9 @@ const mostActiveFaction = computed(() => {
     {} as Record<string, number>
   );
 
-  return Object.entries(factionCounts).sort(([, a], [, b]) => b - a)[0][0];
+  return Object.entries(factionCounts).sort(
+    ([, a], [, b]) => (b as number) - (a as number)
+  )[0][0];
 });
 
 const highestHealth = computed(() => {
@@ -380,6 +225,37 @@ const locationInsights = ref([
   "Unusual migration patterns detected",
   "New gathering point identified",
 ]);
+
+// Add video insights
+const videoInsights = ref([
+  "First recorded peaceful interaction",
+  "Evidence of resource sharing",
+  "New behavioral patterns observed",
+]);
+
+// Add survey state
+const showSurvey = ref(true);
+
+const dismissSurvey = () => {
+  showSurvey.value = false;
+  // Optionally save dismissal to localStorage to prevent showing again
+  localStorage.setItem("surveyDismissed", new Date().toISOString());
+};
+
+// Add this near your other refs
+const pollData = ref({
+  question: "What's causing the unusual health decline?",
+  options: [
+    { text: "Environmental factors", votes: 45 },
+    { text: "New predator species", votes: 32 },
+    { text: "Food shortage", votes: 28 },
+    { text: "Disease outbreak", votes: 15 },
+    { text: "Other", votes: 8 },
+  ],
+  icon: "📊",
+  postedBy: "Research Team",
+  timestamp: "10 minutes ago",
+});
 </script>
 
 <style scoped>

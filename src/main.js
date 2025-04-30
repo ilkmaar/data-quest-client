@@ -20,17 +20,16 @@ const app = createApp({
 });
 
 app.use(store);
-await store.dispatch("auth/init");
+app.use(router);
 
-// Ensure auth is checked before using the router
+// Single initialization point
 store
-  .dispatch("auth/checkAuth")
+  .dispatch("auth/init")
+  .then(() => store.dispatch("auth/checkAuth"))
   .then(() => {
-    app.use(router);
     app.mount("#app");
   })
   .catch((error) => {
-    console.error("Error during auth check:", error);
-    app.use(router);
+    console.error("Error during initialization:", error);
     app.mount("#app");
   });

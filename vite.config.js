@@ -31,6 +31,7 @@ export default defineConfig({
     "process.env.VUE_APP_CLIENT_APP_DOMAIN": JSON.stringify(
       process.env.VUE_APP_CLIENT_APP_DOMAIN
     ),
+    "process.env.STUDY_PASSWORD": JSON.stringify(process.env.STUDY_PASSWORD),
   },
   resolve: {
     alias: {

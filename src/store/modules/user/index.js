@@ -22,7 +22,6 @@ const mutations = {
     state.userData = userData;
   },
   SET_USER_PLAYER_WORLDS(state, playerWorlds) {
-    console.log("playerWorlds: ", playerWorlds);
     state.playerWorlds = playerWorlds;
   },
   SET_LOADING(state, { type, value }) {
@@ -44,6 +43,7 @@ const handleError = (commit, type, error) => {
 
 const actions = {
   async fetchUserData({ dispatch, getters }, userId) {
+    console.log("fetchUserData - starting with:", userId);
     dispatch("fetchUserPlayers", userId);
     await dispatch("fetchCurrentUser", userId);
 
@@ -83,6 +83,7 @@ const actions = {
   },
 
   async fetchCurrentUser({ commit }, userId) {
+    console.log("fetchCurrentUser - starting with:", userId);
     commit("SET_ERROR", { type: "userData", error: null });
 
     try {
@@ -131,6 +132,8 @@ const getters = {
   userData: (state) => state.userData,
   isResearcher: (state) =>
     state.userData?.roles.some((role) => role.name === "researcher") || false,
+  isAdmin: (state) =>
+    state.userData?.roles.some((role) => role.name === "admin") || false,
   playerWorlds: (state) => state.playerWorlds || [],
   loading: (state) => state.loading,
   error: (state) => state.error,

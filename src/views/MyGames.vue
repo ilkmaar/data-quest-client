@@ -19,7 +19,12 @@ const games = computed(() => store.getters["user/playerWorlds"] || []);
 
 const selectWorld = async (data) => {
   try {
-    await store.dispatch("world/goToWorld", { worldId: data.world_id });
+    await store.dispatch("world/goToWorld", {
+      worldId: data.world_id,
+      playerId: data.player_id,
+      playerName: data.player_name,
+      worldName: data.world_name,
+    });
   } catch (error) {
     console.error("Failed to select world:", error.message);
   }

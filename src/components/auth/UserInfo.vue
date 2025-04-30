@@ -9,13 +9,20 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useStore } from "vuex";
-
-const store = useStore();
-const avatarUrl = computed(() => store.getters["auth/avatarUrl"]);
-const username = computed(() => store.getters["auth/username"]);
-const email = computed(() => store.getters["auth/email"]);
+defineProps({
+  avatarUrl: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style scoped>

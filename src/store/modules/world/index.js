@@ -11,6 +11,7 @@ const state = {
   currentFactionStats: null,
   currentCreatureLocations: null,
   currentPlayerLocations: null,
+  currentPlayerId: null,
   playerProgressionData: null,
   loading: {
     currentCreatureStats: false,
@@ -29,6 +30,9 @@ const state = {
 const mutations = {
   SET_CURRENT_WORLD_ID(state, worldId) {
     state.currentWorldId = worldId;
+  },
+  SET_CURRENT_PLAYER_ID(state, playerId) {
+    state.currentPlayerId = playerId;
   },
   SET_CURRENT_WORLD_DATA(state, worldData) {
     state.currentWorldData = worldData;
@@ -77,7 +81,6 @@ const actions = {
   async setCurrentWorldId({ commit, dispatch }, { worldId }) {
     const currentWorldId = state.currentWorldId;
 
-    console.log("[world store] setting current world: ", worldId);
     if (!currentWorldId || currentWorldId !== worldId) {
       commit("RESET_WORLD_DATA");
       commit("SET_CURRENT_WORLD_ID", worldId);
@@ -87,7 +90,9 @@ const actions = {
 
   async initializeWorld({ dispatch, state, commit, rootGetters }) {
     const worldId = state.currentWorldId;
+    const playerId = state.currentPlayerId;
     console.log("initializing world: ", worldId);
+    console.log("playerId: ", playerId);
 
     try {
       // Fetch all required data
@@ -95,6 +100,7 @@ const actions = {
         [
           dispatch("fetchCurrentCreatureStats", worldId),
           dispatch("fetchCurrentLocations", worldId),
+          dispatch("fetchPlayerProgression", { worldId, playerId }),
         ].filter(Boolean)
       ); // Filter out undefined promises
     } catch (error) {
@@ -109,7 +115,7 @@ const actions = {
     try {
       const { loading, result, error, run } = useDefinedQuery(
         currentStateQueries.CURRENT_CREATURES_STATS,
-        { worldId: "world_CCProd_" + worldId }
+        { worldId: "world_prod_" + worldId }
       );
 
       // Set up watchers before running the query
@@ -159,7 +165,7 @@ const actions = {
     try {
       const { loading, result, error, run } = useDefinedQuery(
         currentStateQueries.CURRENT_LOCATIONS,
-        { worldId: "world_CCProd_" + worldId }
+        { worldId: "world_prod_" + worldId }
       );
 
       const stopLoadingWatch = watch(loading, (newValue) => {
@@ -200,13 +206,17 @@ const actions = {
   },
 
   async fetchPlayerProgression({ commit }, { worldId, playerId }) {
+    console.log("fetching: ", {
+      worldId: "world_prod_" + worldId,
+      playerId: "player_" + playerId,
+    });
     commit("SET_ERROR", { type: "playerProgression", error: null });
 
     try {
       const { loading, result, error, run } = useDefinedQuery(
         progressQueries.GET_FORAGING_PROGRESS,
         {
-          worldId: "world_CCProd_" + worldId,
+          worldId: "world_prod_" + worldId,
           playerId: "player_" + playerId,
         }
       );
@@ -232,6 +242,10 @@ const actions = {
               "SET_PLAYER_PROGRESSION_DATA",
               newResult.playerForagingProgression
             );
+            console.log(
+              "player progression data: ",
+              newResult.playerForagingProgression
+            );
             stopLoadingWatch();
             stopResultWatch();
           }
@@ -244,8 +258,15 @@ const actions = {
     }
   },
 
-  async goToWorld({ commit }, { worldId }) {
+  async goToWorld({ commit }, { worldId, playerId, playerName, worldName }) {
     console.log("[world store] going to world: ", worldId);
+    commit("SET_CURRENT_PLAYER_ID", playerId);
+    commit("SET_CURRENT_WORLD_DATA", {
+      worldId,
+      worldName,
+      playerId,
+      playerName,
+    });
     router.push(`/world/${worldId}`);
   },
 };
@@ -253,6 +274,7 @@ const actions = {
 const getters = {
   currentWorldId: (state) => state.currentWorldId || null,
   currentPlayerId: (state) => state.currentPlayer?.player_id || null,
+  currentWorldData: (state) => state.currentWorldData || null,
   currentWorldName: (state) => state.currentWorld?.world_name || null,
   currentPlayerName: (state) => state.currentWorld?.player_name || null,
   currentCreatureStats: (state) => state.currentCreatureStats || null,
